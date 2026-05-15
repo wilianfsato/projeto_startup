@@ -1,0 +1,174 @@
+/* Painel / dashboard — alinhado ao design do site */
+:root {
+  --brand-violet: #6d28d9;
+  --fundo: #f4f6f8;
+  --texto: #0f172a;
+  --texto-suave: #64748b;
+  --font: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+body.dashboard-body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--fundo);
+  color: var(--texto);
+  min-height: 100vh;
+}
+
+.dashboard-top {
+  background: #fff;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  padding: 16px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dashboard-top h1 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.dashboard-top a {
+  color: var(--brand-violet);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.dashboard-top a:hover {
+  text-decoration: underline;
+}
+
+.dashboard-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h2 {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+}
+
+.page-header .meta {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.kpi-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.kpi-card .numero {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--brand-violet);
+}
+
+.kpi-card .label {
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+  margin-top: 4px;
+}
+
+.graficos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.grafico-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.grafico-card h3 {
+  margin: 0 0 16px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.grafico-card canvas {
+  max-height: 280px;
+}
+
+.tabela-admin {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tabela-admin th,
+.tabela-admin td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.tabela-admin th {
+  background: #f8fafc;
+  font-weight: 600;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.badge-pendente,
+.badge-aprovado,
+.badge-recusado,
+.badge-disponivel,
+.badge-adotado {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.badge-aprovado {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge-pendente {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-recusado {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.dashboard-vazio {
+  color: var(--texto-suave);
+  padding: 16px 0;
+}
+
+@media (max-width: 640px) {
+  .kpi-card .numero {
+    font-size: 1.75rem;
+  }
+}
