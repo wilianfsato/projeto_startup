@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vida de Quatro Patas</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body class="com-splash">
+
+<div id="splash" class="splash-screen" role="status" aria-live="polite">
+  <div class="splash-inner">
+    <span class="splash-logo" aria-hidden="true">🐾</span>
+    <p class="splash-title">Vida de Quatro Patas</p>
+    <p class="splash-tagline">Carregando experiências de adoção responsável…</p>
+    <div class="splash-progress" aria-hidden="true"><span class="splash-progress-bar"></span></div>
+  </div>
+</div>
+
+<header class="site-header">
+
+<h1 class="site-logo"><span class="site-logo-mark" aria-hidden="true">🐾</span> Vida de Quatro Patas</h1>
+
+<nav>
+
+<button onclick="mostrarTela('home')">Home</button>
+<button onclick="mostrarTela('animais')">Animais</button>
+<button onclick="mostrarTela('animais-adotados')">Animais adotados</button>
+<button onclick="mostrarTela('informacoes')">Informações</button>
+<a href="dashboard.php" class="nav-link-painel" title="Indicadores e gráficos">Painel</a>
+<a href="consultas.php" class="nav-link-painel" title="Consultas e relatórios">Consultas</a>
+<button onclick="mostrarTela('favoritos')">Favoritos</button>
+<button onclick="mostrarTela('ongs')">ONGs</button>
+<button onclick="mostrarTela('registrar-animais')">Registrar Animais</button>
+<button onclick="mostrarTela('denunciar')">Denunciar Maus-Tratos</button>
+<button type="button" id="navBtnEntrar" class="nav-btn-auth" onclick="mostrarTela('acesso')">Entrar</button>
+<button type="button" id="navBtnConta" class="nav-btn-auth" onclick="mostrarTela('perfil')" hidden>Conta</button>
+
+</nav>
+
+</header>
+
+<!-- HOME -->
+
+<section id="home" class="tela home">
+
+  <div class="hero hero-grid">
+
+    <div class="hero-texto">
+      <span class="hero-badge">🐾 Adoção responsável</span>
+
+      <h1>Encontre seu novo melhor amigo</h1>
+
+      <p>
+        Milhares de animais esperam por um lar cheio de amor.
+        Adote, salve uma vida e ganhe um amigo para sempre.
+      </p>
+
+      <div class="hero-acoes">
+        <button onclick="mostrarTela('animais')">
+          Ver animais disponíveis
+        </button>
+
+        <button class="btn-secundario" onclick="mostrarTela('ongs')">
+          Conhecer ONGs
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-imagem-box">
+      <img
+        class="hero-imagem"
+        src="img/hero-caramelo.jpeg"
+        alt="Pessoa segurando um cachorro caramelo"
+      >
+    </div>
+
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <h2 id="contadorAdotados"></h2>
+      <p>Animais adotados</p>
+    </div>
+
+    <div class="stat">
+      <h2 id="contadorFavoritos"></h2>
+      <p>Favoritos</p>
+    </div>
+
+    <div class="stat">
+      <h2 id="contadorOngs"></h2>
+      <p>ONGs cadastradas</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ANIMAIS -->
+
+<section id="animais" class="tela tela-animais">
+
+<div class="page-head">
+  <h2>Animais disponíveis</h2>
+  <p class="page-lead">Busque por nome e filtre por espécie para encontrar um amigo.</p>
+</div>
+
+<div class="filtros-faixa">
+<input
+id="buscaAnimal"
+class="input-busca"
+placeholder="Buscar por nome..."
+onkeyup="buscarAnimal()"
+/>
+
+<select id="categoria" class="select-filtro" onchange="filtrarAnimais()">
+
+<option value="todos">Todos</option>
+<option value="Cachorro">Cachorros</option>
+<option value="Gato">Gatos</option>
+
+</select>
+</div>
+
+<div id="listaAnimais" class="lista-animais-grid"></div>
+
+</section>
+
+<!-- ANIMAIS ADOTADOS -->
+
+<section id="animais-adotados" class="tela tela-adotados">
+
+<div class="page-head">
+  <h2>Animais adotados</h2>
+  <p class="page-lead">Animais marcados como adotados por você após iniciar o contato. Se desistir do processo, use “Desistir da adoção” para que o animal volte a aparecer como disponível.</p>
+</div>
+
+<div id="listaAnimaisAdotados" class="lista-animais-grid"></div>
+
+</section>
+
+<!-- INFORMAÇÕES -->
+
+<section id="informacoes" class="tela tela-informacoes">
+
+  <header class="info-hero">
+    <div class="info-hero-inner">
+      <p class="info-hero-eyebrow">Conteúdo educativo</p>
+      <h2>Informações Importantes</h2>
+      <p class="info-hero-sub">
+        Conteúdos educativos sobre castração, vacinas, doenças e curiosidades dos animais.
+      </p>
+      <p class="info-painel-link">
+        <a href="dashboard.php" class="link-painel-destaque">📊 Painel de indicadores</a>
+        ·
+        <a href="consultas.php" class="link-painel-destaque">📋 Consultas e relatórios</a>
+        — dados em tempo real com exportação CSV, Excel e PDF.
+      </p>
+    </div>
+  </header>
+
+  <div class="info-grid">
+
+    <article class="info-card info-card--castracao" data-categoria="castracao">
+      <div class="info-card-top">
+        <span class="info-card-icon" aria-hidden="true">✂️</span>
+        <span class="info-card-badge">Castração</span>
+      </div>
+      <h3>🐱 Castração em Gatos</h3>
+      <p>
+        A castração em gatos é um procedimento cirúrgico feito com anestesia, que pode ser injetável
+        ou inalatória. Durante a cirurgia, são removidos os órgãos reprodutivos. Além de impedir a
+        reprodução, ajuda a reduzir fugas, marcação de território, miados excessivos e previne doenças,
+        como infecções uterinas e alguns tipos de câncer. Também contribui para reduzir o abandono.
+      </p>
+    </article>
+
+    <article class="info-card info-card--vacinas" data-categoria="vacinas">
+      <div class="info-card-top">
+        <span class="info-card-icon" aria-hidden="true">💉</span>
+        <span class="info-card-badge">Vacinas</span>
+      </div>
+      <h3>💉 Vacinas para Gatos</h3>
+      <p>
+        As principais vacinas felinas são V3, V4, V5 e antirrábica. Elas protegem contra doenças como
+        panleucopenia, calicivirose, rinotraqueíte, clamidiose, leucemia felina e raiva. A vacinação
+        é fundamental para prevenir doenças graves, proteger outros animais e aumentar a qualidade de vida.
+      </p>
+    </article>
+
+    <article class="info-card info-card--doencas" data-categoria="doencas">
+      <div class="info-card-top">
+        <span class="info-card-icon" aria-hidden="true">🦠</span>
+        <span class="info-card-badge">Doenças</span>
+      </div>
+      <h3>🦠 Doenças Comuns em Gatos</h3>
+      <p>
+        Entre as doenças mais comuns estão rinotraqueíte, calicivirose, panleucopenia, leucemia felina,
+        FIV, giardíase, otite e problemas urinários. Muitas delas podem ser evitadas com vacinação,
+        boa alimentação, higiene e visitas frequentes ao veterinário.
+      </p>
+    </article>
+
+    <article class="info-card info-card--castracao" data-categoria="castracao">
+      <div class="info-card-top">
+        <span class="info-card-icon" aria-hidden="true">✂️</span>
+        <span class="info-card-badge">Castração</span>
+      </div>
+      <h3>🐶 Castração em Cães</h3>
+      <p>
+        A castração em cães também é feita com anestesia, podendo ser injetável ou inalatória.
+        Nos machos são removidos os testículos e, nas fêmeas, os ovários e geralmente o útero.
+        O procedimento evita a reprodução, reduz fugas, agressividade e marcação de território,
+        além de prevenir doenças e aumentar a expectativa de vida.
+      </p>
+    </article>
+
+    <article class="info-card info-card--vacinas" data-categoria="vacinas">
+      <div class="info-card-top">
+        <span class="info-card-icon" aria-hidden="true">💉</span>
+        <span class="info-card-badge">Vacinas</span>
+      </div>
+      <h3>💉 Vacinas para Cães</h3>
+      <p>
+        As principais vacinas caninas são V8, V10, antirrábica, gripe canina e giárdia. Elas ajudam
+        a prevenir doenças como cinomose, parvovirose, hepatite infecciosa, leptospirose, tosse dos canis
+        e raiva. A vacinação reduz internações, evita surtos e melhora a saúde do animal.
+      </p>
+    </article>
+
+    <article class="info-card info-card--doencas" data-categoria="doencas">
+      <div class="info-card-top">
+        <span class="info-card-icon" aria-hidden="true">🦠</span>
+        <span class="info-card-badge">Doenças</span>
+      </div>
+      <h3>🦠 Doenças Comuns em Cães</h3>
+      <p>
+        Em cães, são comuns doenças como cinomose, parvovirose, hepatite infecciosa, leptospirose,
+        tosse dos canis, giardíase e otite. A prevenção depende de vacinação, higiene, alimentação
+        balanceada e acompanhamento veterinário regular.
+      </p>
+    </article>
+
+    <article class="info-card info-card--vacinas" data-categoria="vacinas">
+      <div class="info-card-top">
+        <span class="info-card-icon" aria-hidden="true">🐰</span>
+        <span class="info-card-badge">Vacinas / cuidados</span>
+      </div>
+      <h3>🐰 Coelhos</h3>
+      <p>
+        Coelhos também podem ser castrados, o que ajuda no controle reprodutivo, no comportamento
+        e na prevenção de doenças. As vacinas mais importantes são contra mixomatose e doença viral
+        hemorrágica. Eles são animais sociais, inteligentes e podem se adaptar muito bem ao ambiente doméstico.
+      </p>
+    </article>
+
+    <article class="info-card info-card--curiosidades" data-categoria="curiosidades">
+      <div class="info-card-top">
+        <span class="info-card-icon" aria-hidden="true">✨</span>
+        <span class="info-card-badge">Curiosidades</span>
+      </div>
+      <h3>🐱 Curiosidades sobre Gatos</h3>
+      <p>
+        Gatos reconhecem o próprio nome, enxergam muito bem no escuro, têm audição superior à humana
+        e usam bigodes para medir espaço. Muitos se apegam bastante aos donos, podem aprender truques
+        e se adaptam bem à adoção, inclusive quando idosos ou com deficiência.
+      </p>
+    </article>
+
+    <article class="info-card info-card--curiosidades" data-categoria="curiosidades">
+      <div class="info-card-top">
+        <span class="info-card-icon" aria-hidden="true">✨</span>
+        <span class="info-card-badge">Curiosidades</span>
+      </div>
+      <h3>🐶 Curiosidades sobre Cães</h3>
+      <p>
+        Cães entendem palavras, reconhecem emoções humanas, têm olfato extremamente apurado e conseguem
+        criar laços muito fortes com seus donos. Muitos cães resgatados se tornam muito carinhosos,
+        e até animais com deficiência conseguem se adaptar muito bem com carinho e estímulo.
+      </p>
+    </article>
+
+  </div>
+
+</section>
+
+<!-- FAVORITOS -->
+
+<section id="favoritos" class="tela tela-favoritos">
+
+<div class="page-head">
+  <h2>Animais favoritos</h2>
+  <p class="page-lead">Animais que você marcou com ❤️ para acompanhar depois.</p>
+</div>
+
+<div id="listaFavoritos"></div>
+
+</section>
+
+
+
+<!-- ONGS — cadastro, busca e lista (mapa ao lado em telas grandes) -->
+
+<section id="ongs" class="tela tela-ongs">
+
+  <div class="ongs-page-head">
+    <h2>ONGs</h2>
+    <p class="ongs-lead">Cadastre sua organização, encontre parceiros por cidade e visualize o mapa de referência.</p>
+  </div>
+
+  <div class="ongs-layout">
+
+    <div class="ongs-col-ong">
+
+      <div class="ongs-panel">
+        <h3 class="ongs-panel-title">Cadastrar ONG</h3>
+        <p class="ongs-panel-desc">Preencha os dados da sua organização. Após o cadastro, você será direcionado para registrar os animais.</p>
+        <label class="field-label" for="nomeOng">Nome da ONG</label>
+        <input id="nomeOng" placeholder="Nome da ONG" autocomplete="organization">
+
+        <p class="ongs-secao-label">Endereço</p>
+        <div class="ong-form-linha ong-form-linha--rua-num">
+          <div>
+            <label class="field-label" for="ruaOng">Rua / logradouro</label>
+            <input id="ruaOng" placeholder="Ex.: Rua das Flores" autocomplete="street-address">
+          </div>
+          <div>
+            <label class="field-label" for="numeroOng">Número</label>
+            <input id="numeroOng" placeholder="Nº" inputmode="numeric" autocomplete="address-line2">
+          </div>
+        </div>
+        <label class="field-label" for="bairroOng">Bairro</label>
+        <input id="bairroOng" placeholder="Bairro">
+
+        <div class="ong-form-linha ong-form-linha--cidade-uf">
+          <div>
+            <label class="field-label" for="cidadeOng">Cidade</label>
+            <input id="cidadeOng" placeholder="Cidade" autocomplete="address-level2">
+          </div>
+          <div>
+            <label class="field-label" for="estadoOng">Estado (UF)</label>
+            <select id="estadoOng">
+              <option value="">UF</option>
+              <option value="AC">AC</option>
+              <option value="AL">AL</option>
+              <option value="AP">AP</option>
+              <option value="AM">AM</option>
+              <option value="BA">BA</option>
+              <option value="CE">CE</option>
+              <option value="DF">DF</option>
+              <option value="ES">ES</option>
+              <option value="GO">GO</option>
+              <option value="MA">MA</option>
+              <option value="MT">MT</option>
+              <option value="MS">MS</option>
+              <option value="MG">MG</option>
+              <option value="PA">PA</option>
+              <option value="PB">PB</option>
+              <option value="PR">PR</option>
+              <option value="PE">PE</option>
+              <option value="PI">PI</option>
+              <option value="RJ">RJ</option>
+              <option value="RN">RN</option>
+              <option value="RS">RS</option>
+              <option value="RO">RO</option>
+              <option value="RR">RR</option>
+              <option value="SC">SC</option>
+              <option value="SP">SP</option>
+              <option value="SE">SE</option>
+              <option value="TO">TO</option>
+            </select>
+          </div>
+        </div>
+
+        <label class="field-label" for="contatoOng">Contato</label>
+        <input id="contatoOng" placeholder="Telefone ou e-mail" autocomplete="tel">
+
+        <button type="button" onclick="cadastrarONG()">
+        Cadastrar ONG
+        </button>
+      </div>
+
+      <div class="ongs-panel">
+        <h3 class="ongs-panel-title">Buscar ONG por cidade</h3>
+        <label class="field-label" for="buscarCidade">Cidade</label>
+        <input id="buscarCidade" placeholder="Digite a cidade">
+
+        <button type="button" onclick="buscarOngCidade()">
+        Buscar
+        </button>
+
+        <div id="resultadoBusca" class="ongs-resultado-wrap"></div>
+      </div>
+
+      <div class="ongs-panel ongs-panel--lista">
+        <h3 class="ongs-panel-title">Lista de ONGs</h3>
+        <div id="listaOngs"></div>
+      </div>
+
+    </div>
+
+    <aside class="ongs-col-mapa" aria-label="Mapa de ONGs">
+      <div class="ongs-mapa-card">
+        <h3 class="ongs-mapa-title">Mapa de ONGs</h3>
+        <p class="ongs-mapa-hint">Referência de localização — ajuste a região no mapa embutido.</p>
+        <div class="ongs-mapa-frame">
+          <iframe
+            title="Mapa de ONGs de proteção animal"
+            width="100%"
+            height="100%"
+            style="border:0"
+            loading="lazy"
+            allowfullscreen
+            src="https://maps.google.com/maps?q=ong%20animais%20sao%20paulo&t=&z=11&ie=UTF8&iwloc=&output=embed">
+          </iframe>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+</section>
+
+<!-- REGISTRAR ANIMAIS (após cadastro de ONG ou pelo menu) -->
+
+<section id="registrar-animais" class="tela tela-registrar">
+
+  <div class="registrar-head">
+    <h2>Registrar Animais</h2>
+    <p class="registrar-lead">Cadastre animais para adoção vinculados à sua ONG. Os dados aparecem na listagem principal junto com os demais.</p>
+  </div>
+
+  <div class="registrar-form-wrap">
+    <label class="field-label" for="nomeAnimal">Nome do animal</label>
+    <input id="nomeAnimal" placeholder="Nome do animal">
+
+    <label class="field-label" for="tipoAnimal">Tipo do animal</label>
+    <select id="tipoAnimal">
+      <option>Cachorro</option>
+      <option>Gato</option>
+    </select>
+
+    <label class="field-label" for="idadeAnimal">Idade</label>
+    <input id="idadeAnimal" placeholder="Idade (ex.: 2 anos)">
+
+    <label class="field-label" for="sexoAnimal">Sexo</label>
+    <select id="sexoAnimal">
+      <option value="Macho">Macho</option>
+      <option value="Fêmea">Fêmea</option>
+      <option value="Não informado">Não informado</option>
+    </select>
+
+    <label class="field-label" for="vacinaAnimal">Vacinas</label>
+    <input id="vacinaAnimal" placeholder="Vacinas">
+
+    <label class="field-label" for="deficienciaAnimal">Deficiência ou condição</label>
+    <input id="deficienciaAnimal" placeholder="Deficiência ou condição">
+
+    <label class="field-label" for="alergiaAnimal">Alergia (opcional)</label>
+    <input id="alergiaAnimal" placeholder="Alergia ou &quot;Não possui&quot;">
+
+    <label class="field-label" for="fotoAnimal">URL da foto</label>
+    <input id="fotoAnimal" placeholder="URL da foto">
+
+    <label class="field-label" for="whatsAnimal">WhatsApp para contato (somente números)</label>
+    <input id="whatsAnimal" placeholder="WhatsApp do doador ou da ONG (somente números)">
+
+    <label class="field-label" for="ongAnimal">Vínculo com a ONG</label>
+    <select id="ongAnimal">
+      <option value="">Sem ONG vinculada</option>
+    </select>
+
+    <button type="button" onclick="cadastrarAnimal()">
+      Cadastrar Animal
+    </button>
+  </div>
+
+</section>
+
+<!-- DENUNCIAR MAUS-TRATOS -->
+
+<section id="denunciar" class="tela tela-denuncia">
+
+  <div class="denuncia-head">
+    <h2>Denunciar Maus-Tratos</h2>
+    <p class="denuncia-lead">Sua denúncia é registrada localmente neste dispositivo para fins de demonstração. Em um caso real, encaminhe também às autoridades competentes.</p>
+  </div>
+
+  <div class="denuncia-layout">
+
+    <form class="denuncia-form" id="formDenuncia" onsubmit="enviarDenuncia(event)">
+
+      <label class="field-label" for="denuncianteNome">Nome da pessoa denunciante <span class="req">*</span></label>
+      <input id="denuncianteNome" name="denuncianteNome" placeholder="Nome completo" required>
+
+      <label class="field-label" for="denunciaCidade">Cidade <span class="req">*</span></label>
+      <input id="denunciaCidade" name="denunciaCidade" placeholder="Cidade" required>
+
+      <label class="field-label" for="denunciaEndereco">Endereço ou local aproximado <span class="req">*</span></label>
+      <input id="denunciaEndereco" name="denunciaEndereco" placeholder="Rua, bairro ou referência" required>
+
+      <label class="field-label" for="denunciaTipo">Tipo de denúncia <span class="req">*</span></label>
+      <select id="denunciaTipo" name="denunciaTipo" required>
+        <option value="">Selecione</option>
+        <option value="Abandono">Abandono</option>
+        <option value="Falta de água/comida">Falta de água/comida</option>
+        <option value="Agressão física">Agressão física</option>
+        <option value="Cativeiro inadequado">Cativeiro inadequado</option>
+        <option value="Outro">Outro</option>
+      </select>
+
+      <label class="field-label" for="denunciaDescricao">Descrição do caso <span class="req">*</span></label>
+      <textarea id="denunciaDescricao" name="denunciaDescricao" rows="5" placeholder="Descreva o que observou com o máximo de detalhes possível." required></textarea>
+
+      <label class="field-label" for="denunciaContato">Telefone ou WhatsApp <span class="req">*</span></label>
+      <input id="denunciaContato" name="denunciaContato" placeholder="Telefone ou WhatsApp para contato" required>
+
+      <label class="field-label" for="denunciaFotoUrl">Foto — URL da imagem (opcional)</label>
+      <input id="denunciaFotoUrl" name="denunciaFotoUrl" type="url" placeholder="https://...">
+
+      <label class="field-label" for="denunciaFotoArquivo">Ou enviar imagem do aparelho (opcional)</label>
+      <input id="denunciaFotoArquivo" type="file" accept="image/*">
+
+      <button type="submit" class="btn-denuncia-enviar">Enviar denúncia</button>
+      <p id="denunciaMsg" class="denuncia-msg" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="denuncia-lista-panel">
+      <h3 class="denuncia-lista-title">Denúncias registradas</h3>
+      <p class="denuncia-lista-sub">Lista armazenada no servidor.</p>
+      <div id="listaDenuncias" class="lista-denuncias"></div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ACESSO (login, cadastro, recuperação, OAuth) -->
+
+<section id="acesso" class="tela tela-acesso">
+
+  <div class="acesso-wrap">
+    <div class="acesso-card">
+      <header class="acesso-head">
+        <p class="perfil-eyebrow">Bem-vindo</p>
+        <h2>Acesso à plataforma</h2>
+        <p class="acesso-lead">Autenticação tradicional (e-mail e senha) ou alternativa (Google). Senhas são armazenadas com hash no servidor.</p>
+      </header>
+
+      <form id="formAcesso" class="acesso-form" novalidate onsubmit="acessoOnSubmit(event)">
+        <label class="field-label" for="email">E-mail</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="seu@email.com" required>
+
+        <label class="field-label" for="senha">Senha</label>
+        <input id="senha" name="password" type="password" autocomplete="new-password" placeholder="8+ caracteres, maiúscula, minúscula e número" minlength="8" required>
+
+        <p id="politicaSenhaAcesso" class="form-hint"></p>
+        <p class="form-hint acesso-ajuda-rapida">
+          <strong>Primeiro acesso?</strong> Preencha e-mail e senha (ex.: <code>MinhaSenh4</code>) e clique em <strong>Criar minha conta</strong> — os mesmos campos servem para <strong>Entrar</strong> depois. Tecla <kbd>Enter</kbd> = tentar entrar; para cadastrar, use o botão verde abaixo.
+        </p>
+
+        <div class="acesso-botoes-linha" role="group" aria-label="Entrar ou criar conta">
+          <button type="submit" class="btn-login">Entrar</button>
+          <button type="button" class="btn-secundario btn-criar-conta" id="btnCriarConta" onclick="registrarUsuario()">Criar minha conta</button>
+        </div>
+      </form>
+
+        <p id="perfilDividerGoogle" class="perfil-divider-ou" role="presentation">ou</p>
+        <div id="googleSignInButton" class="perfil-google-button" aria-label="Entrar com Google"></div>
+        <p id="googleSignInAviso" class="perfil-google-aviso">
+          Para “Entrar com Google”, configure <code>GOOGLE_CLIENT_ID</code> em <code>config.php</code> e autorize a URL no Google Cloud Console.
+        </p>
+
+        <details class="acesso-recovery">
+          <summary>Esqueci minha senha</summary>
+          <p class="form-hint">Solicite um token seguro. Em produção ele seria enviado por e-mail; no modo demonstração o servidor pode exibir o token para testes.</p>
+          <label class="field-label" for="recEmail">E-mail da conta</label>
+          <input id="recEmail" type="email" autocomplete="email" placeholder="mesmo e-mail do cadastro">
+          <button type="button" class="btn-secundario" onclick="solicitarRecuperacaoSenha()">Solicitar token</button>
+          <div id="recExtra" class="rec-extra" hidden>
+            <label class="field-label" for="recToken">Token recebido</label>
+            <input id="recToken" type="text" autocomplete="one-time-code" placeholder="Cole o token">
+            <label class="field-label" for="recNovaSenha">Nova senha</label>
+            <input id="recNovaSenha" type="password" autocomplete="new-password" placeholder="Nova senha forte">
+            <button type="button" onclick="redefinirSenhaToken()">Redefinir senha</button>
+          </div>
+          <p id="recMsg" class="form-msg" role="status"></p>
+        </details>
+
+        <button type="button" class="btn-ghost-acesso" onclick="mostrarTela('home')">Continuar sem entrar</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- CONTA / CONFIGURAÇÕES -->
+
+<section id="perfil" class="tela tela-perfil">
+
+  <div id="perfilLogado" class="perfil-logado" hidden>
+    <div class="perfil-wide">
+      <aside class="perfil-tabs" role="tablist" aria-label="Seções da conta">
+        <button type="button" class="perfil-tab is-active" data-tab="conta" onclick="perfilTab('conta')">Minha conta</button>
+        <button type="button" class="perfil-tab" data-tab="notif" onclick="perfilTab('notif')">Notificações</button>
+        <button type="button" class="perfil-tab" data-tab="seg" onclick="perfilTab('seg')">Segurança</button>
+        <button type="button" class="perfil-tab" data-tab="ajuda" onclick="perfilTab('ajuda')">Ajuda e suporte</button>
+        <button type="button" class="perfil-tab" data-tab="lgpd" onclick="perfilTab('lgpd')">Privacidade / LGPD</button>
+      </aside>
+
+      <div class="perfil-panels">
+
+        <div id="panel-conta" class="perfil-panel is-visible">
+          <div class="perfil-card perfil-card--section">
+            <h3 class="perfil-section-title">Minha conta</h3>
+            <p class="form-hint">E-mail e CPF (se cadastrados) não podem ser alterados aqui, conforme requisitos de identificação.</p>
+
+            <div class="perfil-hero-bg" id="perfilFundoWrap">
+              <div class="perfil-hero-bg-inner" id="perfilFundoInner"></div>
+              <label class="perfil-bg-btn">
+                <span>Plano de fundo</span>
+                <input type="file" accept="image/*" onchange="trocarFundoPerfil(event)" class="perfil-foto-input">
+              </label>
+              <button type="button" class="btn-link perfil-bg-remove" onclick="limparFundoPerfil()">Remover fundo</button>
+            </div>
+
+            <div class="perfil-avatar-wrap perfil-avatar-wrap--inline">
+              <div class="perfil-avatar-ring">
+                <img id="fotoPerfil" class="perfil-avatar" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Foto do perfil">
+              </div>
+              <label class="perfil-foto-label">
+                <span class="perfil-foto-text">Foto de perfil</span>
+                <input type="file" accept="image/*" onchange="trocarFoto(event)" class="perfil-foto-input">
+              </label>
+              <button type="button" class="btn-link" onclick="limparFotoPerfil()">Remover foto</button>
+            </div>
+
+            <div class="perfil-identidade perfil-identidade--left">
+              <h3 id="nomeUsuario" class="perfil-nome">—</h3>
+              <p id="emailUsuario" class="perfil-email-display"></p>
+              <p id="cpfUsuario" class="perfil-meta-line"></p>
+            </div>
+
+            <div class="perfil-form">
+              <label class="field-label" for="perfilNome">Nome de exibição</label>
+              <input id="perfilNome" type="text" autocomplete="nickname" maxlength="200">
+
+              <label class="field-label" for="perfilTel">Telefone / WhatsApp</label>
+              <input id="perfilTel" type="tel" autocomplete="tel" maxlength="40" placeholder="Opcional">
+
+              <button type="button" class="btn-login" onclick="salvarPerfilConta()">Salvar dados</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="panel-notif" class="perfil-panel">
+          <div class="perfil-card perfil-card--section">
+            <h3 class="perfil-section-title">Notificações</h3>
+            <p class="form-hint">Escolha os canais e a frequência dos avisos.</p>
+            <fieldset class="perfil-check-grid">
+              <legend class="sr-only">Canais</legend>
+              <label class="check-line"><input type="checkbox" id="notifApp"> Aplicativo / site</label>
+              <label class="check-line"><input type="checkbox" id="notifEmail"> E-mail</label>
+              <label class="check-line"><input type="checkbox" id="notifWa"> WhatsApp</label>
+            </fieldset>
+            <label class="field-label" for="notifFreq">Frequência</label>
+            <select id="notifFreq">
+              <option value="evento">Por evento (ex.: nova mensagem)</option>
+              <option value="diario">Resumo diário</option>
+              <option value="programado">Programado (horário definido)</option>
+            </select>
+            <button type="button" class="btn-login" onclick="salvarNotificacoes()">Salvar preferências</button>
+          </div>
+        </div>
+
+        <div id="panel-seg" class="perfil-panel">
+          <div class="perfil-card perfil-card--section">
+            <h3 class="perfil-section-title">Segurança</h3>
+            <div id="politicaSenhaBloco" class="legal-box">
+              <strong>Política de senha</strong>
+              <p id="politicaSenhaTexto" class="form-hint"></p>
+            </div>
+            <div id="blocoTrocarSenha" class="perfil-form">
+              <label class="field-label" for="senhaAtual">Senha atual</label>
+              <input id="senhaAtual" type="password" autocomplete="current-password">
+              <label class="field-label" for="senhaNova">Nova senha</label>
+              <input id="senhaNova" type="password" autocomplete="new-password">
+              <button type="button" class="btn-login" onclick="trocarSenhaConta()">Alterar senha</button>
+            </div>
+            <p id="avisoSenhaGoogle" class="form-hint" hidden>Conta Google: você pode definir uma senha local para também entrar com e-mail e senha.</p>
+
+            <div class="perfil-danger-zone">
+              <h4>Exclusão de conta</h4>
+              <p class="form-hint">Manter a conta ativa preserva favoritos, histórico e adoções registradas neste dispositivo/servidor.</p>
+              <button type="button" class="btn-secundario" onclick="iniciarExclusaoConta()">Quero excluir minha conta</button>
+              <div id="exclusaoWrap" class="exclusao-wrap" hidden>
+                <p id="exclusaoMsg" class="form-msg"></p>
+                <label class="field-label" for="tokenExclusao">Código de confirmação</label>
+                <input id="tokenExclusao" type="text" autocomplete="one-time-code">
+                <label class="field-label" for="senhaExclusao">Senha atual (obrigatória se você usa senha)</label>
+                <input id="senhaExclusao" type="password" autocomplete="current-password">
+                <button type="button" class="btn-logout" onclick="confirmarExclusaoConta()">Confirmar exclusão permanente</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="panel-ajuda" class="perfil-panel">
+          <div class="perfil-card perfil-card--section">
+            <h3 class="perfil-section-title">Ajuda e suporte</h3>
+            <div class="ajuda-bloco">
+              <strong>Fale conosco</strong>
+              <p>E-mail: <a href="mailto:contato@vidadequatropatas.local">contato@vidadequatropatas.local</a></p>
+              <p>WhatsApp: <a href="https://wa.me/5511999999999" target="_blank" rel="noopener">(11) 99999-9999</a> (exemplo)</p>
+            </div>
+            <details class="faq-item">
+              <summary>Como adotar um animal?</summary>
+              <p>Na lista de animais, use Adotar: o site abre o WhatsApp do responsável e registra a adoção na sua conta.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Preciso criar conta?</summary>
+              <p>Para favoritos e adoções registradas no servidor, sim. Você pode navegar sem login em parte do conteúdo.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Onde ficam meus dados?</summary>
+              <p>Neste ambiente de demonstração, os dados ficam no banco SQLite do servidor. Veja a Política de Privacidade na aba LGPD.</p>
+            </details>
+
+            <div class="sobre-box legal-box" id="sobreSistema">
+              <strong>Sobre o sistema</strong>
+              <p id="sobreLinha1"></p>
+              <p>Desenvolvido para o projeto acadêmico <em>Vida de Quatro Patas</em>. Distribuição local / demonstração.</p>
+            </div>
+
+            <div class="rating-box">
+              <h4>Avalie o aplicativo</h4>
+              <p class="form-hint">De 1 a 5 estrelas e comentário opcional.</p>
+              <div class="rating-stars" id="ratingStars" role="group" aria-label="Estrelas">
+                <button type="button" data-star="1" aria-label="1 estrela" onclick="setRatingStar(1)">★</button>
+                <button type="button" data-star="2" aria-label="2 estrelas" onclick="setRatingStar(2)">★</button>
+                <button type="button" data-star="3" aria-label="3 estrelas" onclick="setRatingStar(3)">★</button>
+                <button type="button" data-star="4" aria-label="4 estrelas" onclick="setRatingStar(4)">★</button>
+                <button type="button" data-star="5" aria-label="5 estrelas" onclick="setRatingStar(5)">★</button>
+              </div>
+              <input type="hidden" id="ratingValue" value="0">
+              <label class="field-label" for="ratingComentario">Comentário</label>
+              <textarea id="ratingComentario" rows="3" maxlength="2000" placeholder="O que achou da plataforma?"></textarea>
+              <button type="button" class="btn-login" onclick="enviarAvaliacao()">Enviar avaliação</button>
+              <p id="ratingStatus" class="form-msg"></p>
+            </div>
+          </div>
+        </div>
+
+        <div id="panel-lgpd" class="perfil-panel">
+          <div class="perfil-card perfil-card--section">
+            <h3 class="perfil-section-title">Privacidade e LGPD</h3>
+            <div class="legal-box">
+              <strong>Lei Geral de Proteção de Dados (Lei nº 13.709/2018)</strong>
+              <p>O tratamento de dados pessoais segue finalidades legítimas, transparência e segurança. Você pode solicitar correções de dados não identificatórios na aba Minha conta e encerrar a conta na aba Segurança.</p>
+            </div>
+            <article class="legal-article">
+              <h4>Política de Privacidade (resumo)</h4>
+              <p><strong>Quais dados coletamos:</strong> e-mail, nome de exibição, telefone opcional, preferências de notificação, favoritos e registros de adoção vinculados à sua conta; imagens de perfil e fundo se você enviar.</p>
+              <p><strong>Finalidade:</strong> autenticação, personalização, histórico de adoções e melhoria do serviço.</p>
+              <p><strong>Base legal:</strong> execução de serviço solicitado pelo titular e consentimento quando aplicável.</p>
+              <p><strong>Armazenamento:</strong> banco de dados no servidor da aplicação; senhas com hash (bcrypt/argon via <code>password_hash</code> do PHP).</p>
+              <p><strong>Seus direitos:</strong> confirmação de tratamento, acesso, correção de dados cadastrais não principais, exclusão de conta mediante fluxo seguro.</p>
+            </article>
+            <article class="legal-article">
+              <h4>Termos de Uso (resumo)</h4>
+              <p>O uso da plataforma é para fins de demonstração e conscientização sobre adoção responsável. É proibido uso ilícito, ofensivo ou que viole direitos de terceiros. O contato com ONGs e doadores é de responsabilidade dos usuários.</p>
+            </article>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="perfil-logout-bar">
+      <button type="button" onclick="logout()" class="btn-logout">Sair da conta</button>
+    </div>
+  </div>
+
+</section>
+
+<script src="config.js.php"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="script.js"></script>
+
+</body>
+</html>

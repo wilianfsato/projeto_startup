@@ -1,0 +1,20 @@
+{
+  "name": "vida-quatro-patas",
+  "version": "1.0.0",
+  "description": "Site Vida de Quatro Patas — adoção de animais, ONGs, informações e denúncias (HTML/CSS/JS estático).",
+  "private": true,
+  "scripts": {
+    "start": "serve . -l 5173",
+    "dev": "serve . -l 5173",
+    "preview": "serve . -l 5173"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  },
+  "keywords": [
+    "adoção",
+    "animais",
+    "ongs",
+    "static-site"
+  ]
+}
